@@ -1,12 +1,21 @@
 <template>
-    <div class="card" @click="goToProductDetails">
+    <div class="card" >
         <div class="card__img">
             <img :src="imageUrl" alt="card-img">
         </div>
-        <p>{{ category }}</p>
-        <p>{{ productName }}</p>
-        <p>Цена: {{ prise }} $</p>
-        <p>Рейтинг: {{ rating }}</p>
+        <div class="card__text">
+            <div class="card__text__title">
+                <p>{{ category }}</p>
+                <p>{{ productName }}</p>
+            </div>
+            <div class="card__text__info">
+                <p>Цена: {{ prise }} $</p>
+                <p>Рейтинг: {{ rating }} / 5.0</p>
+                <button @click="goToProductDetails">
+                    Подробнее
+                </button>
+            </div>
+        </div>
     </div>
 </template>
   
@@ -37,7 +46,7 @@ p{
 
 .card{
     width: calc((100% - 190px) / 5);
-    border: 1px solid #675d5d;
+    border: 1px solid #968b8b;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -55,4 +64,28 @@ p{
 .card__img img{
     height: 100px;
 }
+.card__text{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+.card__text__title{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card__text__info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card__text__info p{
+    font-size: 18px;
+}
+
 </style>

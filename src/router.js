@@ -1,9 +1,11 @@
 
 import { createRouter, createWebHistory } from 'vue-router';
-import ProductDetails from './components/ProductDetails.vue'; 
+import ProductDetails from './components/ProductDetails.vue';
+import CardBlock from './components/CardBlock.vue'
 
 const routes = [
-  { path: '/product/:id', component: ProductDetails }
+  { path: '/', name:'CardBlock', component: CardBlock},
+  { path: '/product/:id', name:'ProductDetails', component: ProductDetails }
 ];
 
 const router = createRouter({
