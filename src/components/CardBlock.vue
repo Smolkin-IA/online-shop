@@ -10,7 +10,7 @@
     </select>
   </div>
   <div class="card-block">
-    <Card v-for="product in products"
+    <Card v-for="product in paginatedProducts"
           :key="product.id"
           :productId="product.id"
           :imageUrl="product.image"
@@ -19,6 +19,11 @@
           :prise="product.price"
           :rating="product.rating.rate"
     />
+  </div>
+  <div class="page-block">
+    <button @click="prevPage" :disabled="currentPage === 1">Предыдущая</button>
+    <span>Страница {{ currentPage }}</span>
+    <button @click="nextPage" :disabled="currentPage * pageSize >= products.length">Следующая</button>
   </div>
 </template>
 
@@ -33,7 +38,16 @@ export default {
   data(){
     return{
       currentCategory:"",
-      products:[]
+      products:[],
+      currentPage: 1,
+      pageSize: 10
+    }
+  },
+  computed: {
+    paginatedProducts() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return this.products.slice(start, end);
     }
   },
   methods:{
@@ -41,6 +55,12 @@ export default {
       fetch('https://fakestoreapi.com/products'+this.currentCategory+'?limit=20')
         .then(res=>res.json())
         .then(json=>this.products = json)
+    },
+    nextPage() {
+      if ((this.currentPage * this.pageSize) < this.products.length) this.currentPage++;
+    },
+    prevPage() {
+      if (this.currentPage > 1) this.currentPage--;
     }
   },
   mounted(){
@@ -63,6 +83,13 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.page-block{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
 }
 
 </style>

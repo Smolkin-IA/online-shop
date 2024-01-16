@@ -10,9 +10,11 @@
           <p>{{ product.description }}</p>
         </div>
         <div class="info-block__text__info">
-          <p v-if="product.rating">Rating: {{ product.rating.rate }} / 5.0</p>
+          <p v-if="product.rating">Рейтинг: {{ product.rating.rate }} / 5.0</p>
           <p v-else>Rating: N/A</p>
-          <p>Price: {{ product.price }}</p>
+          <p v-if="product.rating">Кол-во оценок: {{ product.rating.count }}</p>
+          <p v-else>Кол-во оценок: N/A</p>
+          <p>Цена: {{ product.price }} $</p>
         </div>
       </div>
     </div>
@@ -42,7 +44,7 @@
 
 .info-block{
   display: flex;
-  gap: 20px;
+  gap: 40px;
   padding: 20px;
   border: 1px solid #968b8b;
   border-radius: 20px;
