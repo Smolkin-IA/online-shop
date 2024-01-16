@@ -9,7 +9,10 @@
       <option value="/category/women's clothing">Женская одежда</option>
     </select>
   </div>
-  <div class="card-block">
+  <div v-if="isLoading" class="loading">
+    Загрузка...
+  </div>
+  <div v-else class="card-block">
     <Card v-for="product in paginatedProducts"
           :key="product.id"
           :productId="product.id"
@@ -40,7 +43,8 @@ export default {
       currentCategory:"",
       products:[],
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
+      isLoading: false
     }
   },
   computed: {
@@ -52,9 +56,17 @@ export default {
   },
   methods:{
     getProducts(){
+      this.isLoading = true;
       fetch('https://fakestoreapi.com/products'+this.currentCategory+'?limit=20')
         .then(res=>res.json())
-        .then(json=>this.products = json)
+        .then(json=>{
+          this.products = json
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.isLoading = false; 
+          alert("Ошибка загрузки данных")
+        });
     },
     nextPage() {
       if ((this.currentPage * this.pageSize) < this.products.length) this.currentPage++;
